@@ -1,0 +1,47 @@
+body{
+	background-color:#060D02;	
+}
+
+header
+{
+	background-color:rgba(6,12,2,0.8);
+	color:#fff;
+	margin-bottom:1em;
+}
+
+.small-text{
+	font-size:50%;
+}
+
+header h1{
+	color:#80DCF1;
+}
+.userinfo h3
+{
+	color:#80DCF1;
+}
+
+.activity
+{
+	margin-bottom:1em;
+	background-color: #E0E4CC;
+	padding:0.5em;
+	-webkit-border-radius: 0;
+  	border-radius: 0;
+  	-moz-border-radius-bottomleft: 2px;
+  	-moz-border-radius-topleft: 2px;
+  	-webkit-border-bottom-left-radius: 2px;
+  	-webkit-border-top-left-radius: 2px;
+  	border-bottom-left-radius: 2px;
+  	border-top-left-radius: 2px;
+}
+
+.postbox{
+	display:none;
+}
+
+.postContent
+{
+	width:100%;
+	height:2em;
+}
