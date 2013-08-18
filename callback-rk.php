@@ -1,9 +1,12 @@
 <?php
 
-require_once '/part/to/' . 'AppDotNetPHP/EZAppDotNet.php';
+//change path to the location of your config file
+require_once '/path/to/' . 'fitconfig.php';
 
-require_once '/part/to/' . 'runkeeper/vendor/autoload.php';
-require_once '/part/to/' . 'runkeeper/lib/runkeeperAPI.class.php';
+require_once APPDOT_PATH . 'AppDotNetPHP/EZAppDotNet.php';
+
+require_once RK_PATH . 'runkeeper/vendor/autoload.php';
+require_once RK_PATH . 'runkeeper/lib/runkeeperAPI.class.php';
 
 $app_scope        =  array(
 	// 'email', // Access the user's email address // has no effect?
@@ -20,7 +23,7 @@ $app_scope        =  array(
 $app = new EZAppDotNet();
 $url = $app->getAuthUrl();
 
-$_SESSION['path'] = 'fit/';
+//$_SESSION['path'] = 'fit/';
 
 // check that the user is signed in
 if ($app->getSession()) {
@@ -67,7 +70,7 @@ echo '<div id=userblk>';
 
 if($app->getSession()) {
 
-$rk = new runkeeperAPI('/part/to/runkeeper/config/rk-api.yml');
+$rk = new runkeeperAPI(RK_API_YML);
 
 $rkToken = $rk->getRunkeeperToken($_REQUEST['code']);
 
