@@ -271,7 +271,7 @@ for ($i=0; $i < 5; $i++) {
 								<form class="postbox" id="pf<?php echo $i; ?>">
 									<div class="small-6 large-10 columns">
 									<label>Message</label><br/>
-<textarea class="postContent">I&#8217;ve been <?php echo strtolower($value -> type); ?> - <?php echo "".round($value -> total_distance * $distance_convert, 2)." ".$distance_unit;?> in <?php echo unix2human(floor($value->duration));?>. <?php echo $value->total_calories;?> cal. See this on runkeeper
+<textarea class="postContent">I&#8217;ve been <?php echo strtolower($value -> type); ?> - <?php echo "".round($value -> total_distance * $distance_convert, 2)." ".$distance_unit;?> in <?php echo unix2human(floor($value->duration));?>. <?php echo $value->total_calories;?> cal. See this on RunKeeper
  #addfitnesschallenge</textarea>
 <input class=linkAnnotation name=annolnk type=hidden value=<?php echo $profile_read->profile; ?>/activity/<?php echo str_ireplace("/fitnessActivities/", "", $value -> uri); ?>>
 </div>
@@ -351,12 +351,14 @@ for ($i=0; $i < 5; $i++) {
 				var $this = $(this);
 				var data = $this.parents("form").find(".postContent")[0].value;
 				var link = $this.parents("form").find(".linkAnnotation")[0].value;
-				var where = data.indexOf('See this on runkeeper');
-				var promise2 = $.appnet.post.create({
-				text : data,
-				entities : {links : [{"pos": where, "len": 21, "url": link}], "parse_links": true},
-				annotations: [{"type": "net.app.core.crosspost", "value": {"canonical_url": link}}]
-				});
+				var where = data.indexOf('See this on RunKeeper');
+                                var post = {
+                                text : data,
+                                annotations: [{"type": "net.app.core.crosspost", "value": {"canonical_url": link}}]
+                                }
+                                if (where >= 0)
+                                    post.entities = {links : [{"pos": where, "len": 21, "url": link}], "parse_links": true}
+				var promise2 = $.appnet.post.create(post);
 				promise2.then(function(response) {
 				console.log(response);
 				console.log($this);
