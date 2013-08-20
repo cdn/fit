@@ -232,12 +232,19 @@ echo '<a href="' . $profile_read->profile . '">' . $profile_read->name . '</a> '
 <?php
 $rkActivities = $rk->doRunkeeperRequest('FitnessActivityFeed','Read');
 $user_info = $rk->doRunkeeperRequest('User', 'Read');
+$settings_read = $rk->doRunkeeperRequest('Settings', 'Read');
 if ($rkActivities) {
 //print_r($rkActivities);
 //print_r($rkActivities->items);
 
 $distance_unit = "km";
 $distance_convert = 0.001;
+
+if($settings_read->distance_units != $distance_unit) {
+ $distance_unit = 'mi';
+ $distance_convert *= 0.621371192;
+}
+
 for ($i=0; $i < 5; $i++) {
 
  $value = $rkActivities->items[$i];
