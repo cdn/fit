@@ -121,7 +121,7 @@ $app_scope        =  array(
 	 'files',
 	// 'follow', // Follow and unfollow other users
 	// 'messages', // Access the user's private messages
-	// 'public_messages', // Access the user's messages
+	 'public_messages', // Access the user's messages
 	// 'stream', // Read the user's personalized stream
 	// 'update_profile', // Modify user parameters
 	 'write_post', // Post on behalf of the user
@@ -241,8 +241,13 @@ $distance_unit = "km";
 $distance_convert = 0.001;
 
 if($settings_read->distance_units != $distance_unit) {
+ $other_unit = $distance_unit;
+ $other_convert = $distance_convert;
  $distance_unit = 'mi';
  $distance_convert *= 0.621371192;
+} else {
+ $other_unit = 'mi';
+ $other_convert = $distance_convert * 0.621371192;
 }
 
 for ($i=0; $i < 5; $i++) {
@@ -261,9 +266,15 @@ for ($i=0; $i < 5; $i++) {
 		<div class="row">
 					<div class="small-6 large-10 columns">
 						<h4><?php echo $value -> type; ?> on <?php echo $da->format("l jS F Y \a\\t g:ia"); ?></h4>
-						<span>Distance: <?php echo round($value -> total_distance * $distance_convert, 2);
-							echo " ";
-							echo $distance_unit;
+						<span>Distance: <?php
+ $v_td = $value -> total_distance;
+ if($v_td < 100)
+   $dist = floor($v_td) . " m";
+ else {
+   $dist = round($v_td * $distance_convert, 2) . ' ' . $distance_unit;
+   $dist .= ' ( ' . round($v_td * $other_convert, 2) . ' ' . $other_unit . ' )';
+ }
+							echo $dist;
 						?></span> <span>Duration: <?php echo unix2human(floor($value->duration));?></span>
 					</div>
 
@@ -278,7 +289,7 @@ for ($i=0; $i < 5; $i++) {
 								<form class="postbox" id="pf<?php echo $i; ?>">
 									<div class="small-6 large-10 columns">
 									<label>Message</label><br/>
-<textarea class="postContent">I&#8217;ve been <?php echo strtolower($value -> type); ?> - <?php echo "".round($value -> total_distance * $distance_convert, 2)." ".$distance_unit;?> in <?php echo unix2human(floor($value->duration));?>. <?php echo round($value->total_calories, 2);?> cal. See this on RunKeeper
+<textarea class="postContent">I&#8217;ve been <?php echo strtolower($value -> type); ?> - <?php echo $dist;?> in <?php echo unix2human(floor($value->duration));?>. <?php echo round($value->total_calories, 2);?> cal. See this on RunKeeper
  #<?php echo HASHTAG ?></textarea>
 <input class=linkAnnotation name=annolnk type=hidden value=<?php echo $profile_read->profile; ?>/activity/<?php echo str_ireplace("/fitnessActivities/", "", $value -> uri); ?>>
 </div>
