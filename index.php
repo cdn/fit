@@ -278,7 +278,7 @@ for ($i=0; $i < 5; $i++) {
 								<form class="postbox" id="pf<?php echo $i; ?>">
 									<div class="small-6 large-10 columns">
 									<label>Message</label><br/>
-<textarea class="postContent">I&#8217;ve been <?php echo strtolower($value -> type); ?> - <?php echo "".round($value -> total_distance * $distance_convert, 2)." ".$distance_unit;?> in <?php echo unix2human(floor($value->duration));?>. <?php echo $value->total_calories;?> cal. See this on RunKeeper
+<textarea class="postContent">I&#8217;ve been <?php echo strtolower($value -> type); ?> - <?php echo "".round($value -> total_distance * $distance_convert, 2)." ".$distance_unit;?> in <?php echo unix2human(floor($value->duration));?>. <?php echo round($value->total_calories, 2);?> cal. See this on RunKeeper
  #<?php echo HASHTAG ?></textarea>
 <input class=linkAnnotation name=annolnk type=hidden value=<?php echo $profile_read->profile; ?>/activity/<?php echo str_ireplace("/fitnessActivities/", "", $value -> uri); ?>>
 </div>
